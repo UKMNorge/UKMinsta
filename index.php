@@ -14,6 +14,7 @@ use Httpful\Request;
 
 echo "UKM-test";
 error_reporting( E_ALL );
+ini_set('display_errors', '1');
 
 ## TODO:
 #1 - DATABASESJEKK - HVILKE BILDER HAR VI LAGRET
