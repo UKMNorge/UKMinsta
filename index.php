@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '1');
+error_reporting( E_ALL );
 
 # Denne filen laster opp nye bilder lagt ut på Instagram med hashtaggen #javielskerukm til UKMs Dropbox.
 
@@ -8,13 +10,11 @@ require 'vendor/autoload.php';
 require_once('UKMconfig.inc.php');
 require_once('UKM/inc/dropbox.inc.php');
 require_once('UKM/sql.class.php');
+require_once('UKM/curl.class.php');
 
 #phpinfo();
 use Httpful\Request;
 
-echo "UKM-test";
-error_reporting( E_ALL );
-ini_set('display_errors', '1');
 
 ## TODO:
 #1 - DATABASESJEKK - HVILKE BILDER HAR VI LAGRET
@@ -78,7 +78,7 @@ var_dump($imageList);
 #$res = $dropbox->save_url()
 $db_endpoint = 'https://api.dropboxapi.com/2/files/save_url';
 
-$curl = new UKMcurl();
+$curl = new UKMCURL();
 $curl->post(array('path' => $db_save_path, 'url' => $image['url']));
 
 ?>
