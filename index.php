@@ -186,7 +186,7 @@ foreach ($imageList as $image) {
 	$img_id = $sql->insid();
 	if(!$res) {
 		echo '<br><b>Feilet å legge til bilde!</b>';
-		continue
+		continue;
 	}
 
 	### LEGG TIL TAGGER I RELASJONSTABELL
