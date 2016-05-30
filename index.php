@@ -82,7 +82,7 @@ if ( isset( $_GET['deepdive'] ) && isset( $_GET['max_tag_id'] ) ) {
 }
 
 $response = Request::get($uri)->send();
-#var_dump($response);
+var_dump($response);
 $max_tag_id = $response->pagination->next_max_tag_id;
 
 $images = $response->body->data;
