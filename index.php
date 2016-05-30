@@ -97,12 +97,12 @@ $nyere_enn = $last->created_time;
 
 if ( isset( $_GET['deepdive'] ) ) {
 	$qry = new SQL("SELECT * FROM `#table`",
-					array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));	
+					array('table' => $table));	
 }
 else {
 	$qry = new SQL("SELECT * FROM `#table` 
 					WHERE 	`created_time` > '#nyere_enn'",
-					array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));
+					array('table' => $table, 'nyere_enn' => $nyere_enn));
 }
 
 #echo $qry->debug();
