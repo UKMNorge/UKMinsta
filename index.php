@@ -118,21 +118,24 @@ foreach ( $images as $image ){
         	continue;
         }
 
-        ### LEGG TIL / SJEKK OM BRUKEREN ER LAGT TIL I DATABASEN
+        $imageList[$image->id] = $image;
 
-        ### LEGG TIL / SJEKK OM TAGS ER LAGT TIL I DATABASEN
-
-        ### LEGG TIL BILDET I DATABASEN
+        
 
 
-        $imageList[$image->id]['url'] = $image->images->standard_resolution->url;
+/*        $imageList[$image->id]['url'] = $image->images->standard_resolution->url;
         $imageList[$image->id]['user'] = $image->user->username;
         $imageList[$image->id]['caption'] = $image->caption->text;
-        $imageList[$image->id]['created_time'] = $image->created_time;
+        $imageList[$image->id]['created_time'] = $image->created_time;*/
 }
 echo "<br>".count($imageList)." nye bilder funnet.";
 var_dump($imageList);
 
+### LEGG TIL / SJEKK OM BRUKEREN ER LAGT TIL I DATABASEN
+
+### LEGG TIL / SJEKK OM TAGS ER LAGT TIL I DATABASEN
+
+### LEGG TIL BILDET I DATABASEN
 
 #var_dump($response);
 #echo("".$response);
