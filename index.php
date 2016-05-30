@@ -88,7 +88,7 @@ $qry = new SQL("SELECT * FROM `#table`
 				WHERE 	`tag` = '#tag'
 				AND 	`created_time` > '#nyere_enn'",
 				array('table' => $table, 'tag' => $tag, 'nyere_enn' => $nyere_enn));
-echo $qry->debug();
+#echo $qry->debug();
 
 
 ### START OPPLASTING TIL DROPBOX
