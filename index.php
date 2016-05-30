@@ -113,7 +113,7 @@ foreach ( $images as $image ){
         #echo '<br>image<br>\r\n';
         #var_dump ($image);
         #var_dump($image->images->standard_resolution->url);
-        if (in_array($lagrede_bilder, $image->id) ) {
+        if (in_array($image->id, $lagrede_bilder) ) {
         	continue;
         }
         
