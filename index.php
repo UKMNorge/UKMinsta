@@ -128,9 +128,23 @@ foreach ($imageList as $image) {
 	### LEGG TIL / SJEKK OM BRUKEREN ER LAGT TIL I DATABASEN
 	var_dump($image);
 	$sql = new SQL("SELECT `id` FROM `ukm_insta_users`
-					WHERE `username` = '#username'", array('username' => $image->id));
+					WHERE `username` = '#username'", array('username' => $image->user->username));
 	echo $sql->debug();
+	$user_id = $sql->run("field", "id");
+	if(!$user_id) {
+		// Legg til bruker
+		$sql = new SQLins('ukm_insta_users');
+		$sql->add('username') = $image->user->username;
+		$sql->add('nicename') = $image->user->full_name;
+		$sql->add('insta_id') = $image->user->id;
+		$sql->add('profile_picture') = $image->user->profile_picture;
 
+		echo $sql->debug();
+		$sql->run();
+		$user_id = $sql->insid();
+	}
+
+	var_dump($user_id);
 	### LEGG TIL / SJEKK OM TAGS ER LAGT TIL I DATABASEN
 
 
