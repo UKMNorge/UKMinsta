@@ -98,7 +98,7 @@ $qry = new SQL("SELECT * FROM `#table`
 				array('table' => $table, 'tag' => $tag, 'nyere_enn' => $nyere_enn));
 echo $qry->debug();
 $res = $qry->run();
-
+var_dump($res);
 if (!$res) {
 	die('Ingen nye bilder.');
 }
@@ -106,7 +106,7 @@ if (!$res) {
 $lagrede_bilder = array();
 while($row = mysql_fetch_assoc($res)) {
 	var_dump($row);
-	$lagrede_bilder[] = $row['insta_id'];
+	$lagrede_bilder[] = $row['insta_id'];
 }
 
 $imageList = array();
