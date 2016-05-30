@@ -102,14 +102,14 @@ $res = $qry->run();
 $lagrede_bilder = array();
 if ($res) {
 	while($row = mysql_fetch_assoc($res)) {
-		var_dump($row);
+		#var_dump($row);
 		$lagrede_bilder[] = $row['insta_id'];
 	}	
 }
 else echo 'Ingen lagrede bilder.';
 
 $imageList = array();
-var_dump($images);
+#var_dump($images);
 foreach ( $images as $image ){
         #echo '<br>image<br>\r\n';
         #var_dump ($image);
@@ -129,7 +129,7 @@ foreach ( $images as $image ){
         $imageList[$image->id]['created_time'] = $image->created_time;*/
 }
 echo "<br>".count($imageList)." nye bilder funnet.";
-var_dump($imageList);
+#var_dump($imageList);
 
 ### LEGG TIL / SJEKK OM BRUKEREN ER LAGT TIL I DATABASEN
 
