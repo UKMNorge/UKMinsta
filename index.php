@@ -193,10 +193,10 @@ foreach ($imageList as $image) {
 	#echo $sql->debug();
 	$res = $sql->run();
 	$img_id = $sql->insid();
-	if(!$res) {
+	if(!$res || !$img_id) {
 		echo '<br><b>Feilet å legge til bilde!</b>';
 		continue;
-	} else '<br>Lagt til bilde '. $img_id .'.';
+	} else echo '<br>Lagt til bilde '. $img_id .'.';
 
 	### LEGG TIL TAGGER I RELASJONSTABELL
 	echo '<br>Legger til tagger i relasjonstabell.';
