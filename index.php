@@ -84,12 +84,12 @@ var_dump($imageList);
 # Det eldste bildet er sist i arrayet, så vi kan hente bilder fra databasen som er nyere enn det.
 # Da klarer vi oss med èn spørring.
 $nyere_enn = $imageList[count($imageList)-1]['created_time'];
-/*$qry = new SQL("SELECT * FROM `#table` 
+$qry = new SQL("SELECT * FROM `#table` 
 				WHERE 	`tag` = '#tag'
 				AND 	`created_time` > '#nyere_enn'",
 				array('table' => $table, 'tag' => $tag, 'nyere_enn' => $nyere_enn));
-#echo $qry->debug();
-*/
+echo $qry->debug();
+
 
 ### START OPPLASTING TIL DROPBOX
 // KOBLE TIL API
