@@ -132,6 +132,8 @@ foreach ($imageList as $image) {
 	echo $sql->debug();
 	$user_id = $sql->run("field", "id");
 	if(!$user_id) {
+		echo '<br>Oppretter ny bruker '.$image->user->username.'.';
+
 		// Legg til bruker
 		$sql = new SQLins('ukm_insta_users');
 		$sql->add('username', $image->user->username);
@@ -139,14 +141,31 @@ foreach ($imageList as $image) {
 		$sql->add('insta_id', $image->user->id);
 		$sql->add('profile_picture', $image->user->profile_picture);
 
-		echo $sql->debug();
-		$sql->run();
+		#echo $sql->debug();
+		$res = $sql->run();
+		if(!$res) continue;
 		$user_id = $sql->insid();
 	}
-
-	var_dump($user_id);
+	echo '<br>Bruker '.$image->user->username.' har id '.var_dump($user_id).'.';
+	
 	### LEGG TIL / SJEKK OM TAGS ER LAGT TIL I DATABASEN
-
+	echo '<br>Søker opp tagger...';
+	$tags = array();
+	foreach($image->tags as $tag) {
+		$sql = new SQL("SELECT `id` FROM `ukm_insta_tags`
+						WHERE `tag` = '#tag'", array('tag' => $tag));
+		#echo $sql->debug();
+		$tag_id = $sql->run('field', 'id');
+		if(!$tag_id) {
+			$sql = new SQLins('ukm_insta_tags');
+			$sql->add('tag', $tag);
+			$res = $sql->run();
+			if(!$res) continue;
+			$tag_id = $sql->insid();
+		}
+		$tags[$tag_id] = $tag;
+		echo '<br>Tag '.$tag.' har id '.$tag_id.'.';
+	}
 
 	### LEGG TIL BILDET I DATABASEN
 
