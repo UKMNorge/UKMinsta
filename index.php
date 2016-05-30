@@ -77,13 +77,14 @@ $search_tag 	= "javielskerukm";
 $uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?client_id=".$CLIENT_ID;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
-if ( isset( $_GET['deepdive'] ) && isset( $_GET['max_tag_id'] ) ) {
-	$uri .= "&max_tag_id=" . $_GET['max_tag_id'];
+if ( isset( $_GET['deepdive'] ) && isset( $_GET['next_url'] ) ) {
+	#$uri .= "&max_tag_id=" . $_GET['max_tag_id'];
+	$uri = $_GET['next_url'];
 }
 
 $response = Request::get($uri)->send();
-var_dump($response);
-$max_tag_id = $response->pagination->next_max_tag_id;
+#var_dump($response);
+$next_url = $response->body->pagination->next_url;
 
 $images = $response->body->data;
 
@@ -215,7 +216,9 @@ echo '<br>Alle bilder er lagt i databasen.';
 ### HVIS VI SKAL GÅ LANGT TILBAKE
 if (isset( $_GET['deepdive'] ) ) {
 	echo '<br>Går videre til neste sett nå...';
-	echo '<script>window.location = "http://insta.ukm.no?deepdive=true&max_tag_id='.$max_tag_id.'"</script>';
+	echo '<script>window.location = "'.$next_url.'"</script>';
+	#echo '<script>window.location = "http://insta.ukm.no?deepdive=true&max_tag_id='.$max_tag_id.'"</script>';
+
 }
 
 #var_dump($response);
