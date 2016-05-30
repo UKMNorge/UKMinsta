@@ -73,8 +73,8 @@ $table = 'instagram_bilder';
 $CLIENT_ID = INSTAGRAM_CLIENT_ID;
 
 #$tag    =  $_GET['hashtag'];
-$tag 	= "javielskerukm";
-$uri    = "https://api.instagram.com/v1/tags/" . $tag . "/media/recent?client_id=".$CLIENT_ID;
+$search_tag 	= "javielskerukm";
+$uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?client_id=".$CLIENT_ID;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
 # IKKE I BRUK
@@ -95,7 +95,7 @@ $nyere_enn = $last->created_time;
 
 $qry = new SQL("SELECT * FROM `#table` 
 				AND 	`created_time` > '#nyere_enn'",
-				array('table' => $table, 'tag' => $tag, 'nyere_enn' => $nyere_enn));
+				array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));
 echo $qry->debug();
 $res = $qry->run();
 #var_dump($res);
@@ -168,8 +168,26 @@ foreach ($imageList as $image) {
 	}
 
 	### LEGG TIL BILDET I DATABASEN
+	echo '<br>Legger til bildet.';
+	$sql = new SQLins('ukm_insta_bilder');
+	$sql->add('insta_id', $image->id);
+	$sql->add('user_id', $user_id);
+	$sql->add('insta_url', $image->link);
+	$sql->add('url', $image->images->standard_resolution->url);
+	$sql->add('url_thumb', $image->images->thumbnail->url);
+	$sql->add('url_lowres', $image->images->low_resolution->url);
+	$sql->add('caption', $image->caption->text);
+	$sql->add('search_tag', $search_tag);
+	$sql->add('created_time', $image->created_time);
+	$sql->add('upload_status', 'new');
 
+	echo $sql->debug();
+	$res = $sql->run();
+	if(!$res) {
+		echo '<br><b>Feilet å legge til bilde!</b>';
+	}
 
+	### LEGG TIL TAGGER I RELASJONSTABELL
 	die();
 
 }
