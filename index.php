@@ -196,7 +196,7 @@ foreach ($imageList as $image) {
 	if(!$res) {
 		echo '<br><b>Feilet å legge til bilde!</b>';
 		continue;
-	} else '<br>Lagt til bilde '. $img_id'.';
+	} else '<br>Lagt til bilde '. $img_id .'.';
 
 	### LEGG TIL TAGGER I RELASJONSTABELL
 	echo '<br>Legger til tagger i relasjonstabell.';
