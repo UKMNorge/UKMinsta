@@ -91,7 +91,7 @@ $images = $response->body->data;
 # Da klarer vi oss med èn spørring.
 $last = end($images);
 reset($images);
-$nyere_enn = $last['created_time'];
+$nyere_enn = $last->created_time;
 
 $qry = new SQL("SELECT * FROM `#table` 
 				AND 	`created_time` > '#nyere_enn'",
