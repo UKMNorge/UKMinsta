@@ -152,7 +152,10 @@ foreach ($imageList as $image) {
 
 		#echo $sql->debug();
 		$res = $sql->run();
-		if(!$res) continue;
+		if(!$res) {
+			echo '<br><b>'.$sql->error().'.</b>';
+			continue;
+		}
 		$user_id = $sql->insid();
 	}
 	echo '<br>Bruker '.$image->user->username.' har id '.$user_id.'.';
@@ -169,7 +172,10 @@ foreach ($imageList as $image) {
 			$sql = new SQLins('ukm_insta_tags');
 			$sql->add('tag', $tag);
 			$res = $sql->run();
-			if(!$res) continue;
+			if(!$res) {
+				echo '<br><b>'.$sql->error().'.</b>';
+				continue;
+			}
 			$tag_id = $sql->insid();
 		}
 		$tags[$tag_id] = $tag;
@@ -195,6 +201,7 @@ foreach ($imageList as $image) {
 	$img_id = $sql->insid();
 	if(!$res || !$img_id) {
 		echo '<br><b>Feilet å legge til bilde!</b>';
+		echo '<br><b>'.$sql->error().'.</b>';
 		continue;
 	} else echo '<br>Lagt til bilde '. $img_id .'.';
 
@@ -205,7 +212,10 @@ foreach ($imageList as $image) {
 		$sql->add('img_id', $img_id);
 		$sql->add('tag_id', $tag_id);
 		$res = $sql->run();
-		if(!$res) continue;
+		if(!$res) {
+			echo '<br><b>'.$sql->error().'.</b>';
+			continue;
+		}
 		echo '<br>Tag '. $tag.' lagt til i relasjonstabell.';
 	}
 	echo '<br>Done.';
