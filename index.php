@@ -77,14 +77,14 @@ $search_tag 	= "javielskerukm";
 $uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?client_id=".$CLIENT_ID;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
-if ( isset( $_GET['deepdive'] ) && isset( $_GET['next_url'] ) ) {
-	#$uri .= "&max_tag_id=" . $_GET['max_tag_id'];
-	$uri = $_GET['next_url'];
+if ( isset( $_GET['deepdive'] ) && isset( $_GET['max_tag_id'] ) ) {
+	$uri .= "&max_tag_id=" . $_GET['max_tag_id'];
+	#$uri = $_GET['next_url'];
 }
 
 $response = Request::get($uri)->send();
 #var_dump($response);
-$next_url = $response->body->pagination->next_url;
+$max_tag_id = $response->body->pagination->next_max_tag_id;
 
 $images = $response->body->data;
 
@@ -219,7 +219,7 @@ if (isset( $_GET['deepdive'] ) ) {
 	echo '
 	<script>
 	window.setTimeout(function() {
-		window.location = "http://insta.ukm.no?deepdive=true&next_url='.$next_url.'"
+		window.location = "http://insta.ukm.no?deepdive=true&max_tag_id='.$max_tag_id.'"
 	}, 2000);
 	</script>';
 	#echo '<script>window.location = "http://insta.ukm.no?deepdive=true&max_tag_id='.$max_tag_id.'"</script>';
