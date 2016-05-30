@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', '1');
-error_reporting( E_ALL );
+error_reporting( E_WARNING );
 
 # Denne filen laster opp nye bilder lagt ut på Instagram med hashtaggen #javielskerukm til UKMs Dropbox.
 # Author: Asgeir Stavik Hustad
