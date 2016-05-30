@@ -15,6 +15,9 @@ require_once('UKM/curl.class.php');
 #phpinfo();
 use Httpful\Request;
 
+### CONSTANTS
+$table = 'instagram_bilder';
+
 
 ## TODO:
 #1 - DATABASESJEKK - HVILKE BILDER HAR VI LAGRET
@@ -39,14 +42,18 @@ use Httpful\Request;
 #                       SaveUrlArg
 #                       path String The path in Dropbox where the URL will be saved to.
 #                       url String The URL to be saved.
-#4 - NETWORK-ADMIN INTEGRASJON
+#		- Filnavn: 
+#			- Ikke bruk caption som filnavn (Ekstremt lange captions er veldig vanlig!)
+#			- Lagre heller caption i databasen, om vi skal ha de.
+#4 - UKM.NO-INTEGRASJON
 #       - "Det er postet 5 nye #javielskerukm-bilder denne uken."
+#		- Bruk insta.ukm.no som galleri for bilder tagget med UKM-hashtagger?
 
 # JIMs ID - skaff egen og få appen godkjent etterhvert
 $CLIENT_ID = INSTAGRAM_CLIENT_ID;
 
 #$tag    =  $_GET['hashtag'];
-$tag = "javielskerukm";
+$tag 	= "javielskerukm";
 $uri    = "https://api.instagram.com/v1/tags/" . $tag . "/media/recent?client_id=".$CLIENT_ID;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
@@ -66,11 +73,23 @@ foreach ( $images as $image ){
         $imageList[$id]['url'] = $image->images->standard_resolution->url;
         $imageList[$id]['user'] = $image->user->username;
         $imageList[$id]['caption'] = $image->caption->text;
+        $imageList[$id]['created_time'] = $image->created_time;
 }
 var_dump($imageList);
 
 #var_dump($response);
 #echo("".$response);
+
+### SJEKK OM VI HAR BILDET FRA FØR
+# Det eldste bildet er sist i arrayet, så vi kan hente bilder fra databasen som er nyere enn det.
+# Da klarer vi oss med èn spørring.
+$nyere_enn = $imageList[count($imageList)]['created_time'];
+$qry = new SQL("SELECT * FROM `#table` 
+				WHERE 	`tag` = '#tag'
+				AND 	`created_time` > '#nyere_enn'",
+				array('table' => $table, 'tag' => $tag, 'nyere_enn' => $nyere_enn));
+echo $qry->debug();
+
 
 ### START OPPLASTING TIL DROPBOX
 // KOBLE TIL API
