@@ -17,7 +17,7 @@ require_once('UKM/curl.class.php');
 use Httpful\Request;
 
 ### CONSTANTS
-$table = 'instagram_bilder';
+$table = 'ukm_insta_bilder';
 
 
 ## TODO / DOCS:
@@ -94,7 +94,7 @@ reset($images);
 $nyere_enn = $last->created_time;
 
 $qry = new SQL("SELECT * FROM `#table` 
-				AND 	`created_time` > '#nyere_enn'",
+				WHERE 	`created_time` > '#nyere_enn'",
 				array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));
 echo $qry->debug();
 $res = $qry->run();
@@ -106,7 +106,7 @@ if ($res) {
 		$lagrede_bilder[] = $row['insta_id'];
 	}	
 }
-else echo 'Ingen lagrede bilder.';
+else echo 'Ingen nyere bilder funnet i databasen.';
 
 $imageList = array();
 #var_dump($images);
@@ -185,6 +185,9 @@ foreach ($imageList as $image) {
 	$res = $sql->run();
 	if(!$res) {
 		echo '<br><b>Feilet å legge til bilde!</b>';
+	}
+	else {
+		echo '<br>Done.';
 	}
 
 	### LEGG TIL TAGGER I RELASJONSTABELL
