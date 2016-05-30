@@ -216,7 +216,12 @@ echo '<br>Alle bilder er lagt i databasen.';
 ### HVIS VI SKAL GÅ LANGT TILBAKE
 if (isset( $_GET['deepdive'] ) ) {
 	echo '<br>Går videre til neste sett nå...';
-	echo '<script>window.location = "http://insta.ukm.no?deepdive=true&next_url='.$next_url.'"</script>';
+	echo '
+	<script>
+	window.setTimeout(function() {
+		window.location = "http://insta.ukm.no?deepdive=true&next_url='.$next_url.'"
+	}, 2000);
+	</script>';
 	#echo '<script>window.location = "http://insta.ukm.no?deepdive=true&max_tag_id='.$max_tag_id.'"</script>';
 
 }
