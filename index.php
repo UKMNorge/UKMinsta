@@ -105,6 +105,7 @@ if (!$res) {
 
 $lagrede_bilder = array();
 while($row = mysql_fetch_assoc($res)) {
+	var_dump($row);
 	$lagrede_bilder[] = $row['insta_id'];
 }
 
