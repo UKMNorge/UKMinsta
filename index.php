@@ -134,10 +134,10 @@ foreach ($imageList as $image) {
 	if(!$user_id) {
 		// Legg til bruker
 		$sql = new SQLins('ukm_insta_users');
-		$sql->add('username') = $image->user->username;
-		$sql->add('nicename') = $image->user->full_name;
-		$sql->add('insta_id') = $image->user->id;
-		$sql->add('profile_picture') = $image->user->profile_picture;
+		$sql->add('username', $image->user->username);
+		$sql->add('nicename', $image->user->full_name);
+		$sql->add('insta_id', $image->user->id);
+		$sql->add('profile_picture', $image->user->profile_picture);
 
 		echo $sql->debug();
 		$sql->run();
