@@ -109,6 +109,7 @@ if ($res) {
 else echo 'Ingen lagrede bilder.';
 
 $imageList = array();
+var_dump($images);
 foreach ( $images as $image ){
         #echo '<br>image<br>\r\n';
         #var_dump ($image);
@@ -116,13 +117,22 @@ foreach ( $images as $image ){
         if (in_array($image->id, $lagrede_bilder) ) {
         	continue;
         }
-        
+
+        ### LEGG TIL / SJEKK OM BRUKEREN ER LAGT TIL I DATABASEN
+
+        ### LEGG TIL / SJEKK OM TAGS ER LAGT TIL I DATABASEN
+
+        ### LEGG TIL BILDET I DATABASEN
+
+
         $imageList[$image->id]['url'] = $image->images->standard_resolution->url;
         $imageList[$image->id]['user'] = $image->user->username;
         $imageList[$image->id]['caption'] = $image->caption->text;
         $imageList[$image->id]['created_time'] = $image->created_time;
 }
+echo "<br>".count($imageList)." nye bilder funnet.";
 var_dump($imageList);
+
 
 #var_dump($response);
 #echo("".$response);
