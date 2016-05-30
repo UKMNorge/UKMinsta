@@ -77,13 +77,14 @@ $search_tag 	= "javielskerukm";
 $uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?client_id=".$CLIENT_ID;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
-# IKKE I BRUK
-if ( isset($_GET['max_tag_id']) ) {
-        $uri .= "&max_tag_id=" . $_GET['max_tag_id'];
+if ( isset( $_GET['deepdive'] ) && isset( $_GET['max_tag_id'] ) ) {
+	$uri .= "&max_tag_id=" . $_GET['max_tag_id'];
 }
 
 $response = Request::get($uri)->send();
 #var_dump($response);
+$max_tag_id = $response->pagination->next_max_tag_id;
+
 $images = $response->body->data;
 
 ### SJEKK OM VI HAR BILDET FRA FØR
@@ -93,9 +94,16 @@ $last = end($images);
 reset($images);
 $nyere_enn = $last->created_time;
 
-$qry = new SQL("SELECT * FROM `#table` 
-				WHERE 	`created_time` > '#nyere_enn'",
-				array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));
+if ( isset( $_GET['deepdive'] ) ) {
+	$qry = new SQL("SELECT * FROM `#table`",
+					array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));	
+}
+else {
+	$qry = new SQL("SELECT * FROM `#table` 
+					WHERE 	`created_time` > '#nyere_enn'",
+					array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));
+}
+
 #echo $qry->debug();
 $res = $qry->run();
 #var_dump($res);
@@ -200,6 +208,14 @@ foreach ($imageList as $image) {
 		echo '<br>Tag '. $tag.' lagt til i relasjonstabell.';
 	}
 	echo '<br>Done.';
+}
+
+echo '<br>Alle bilder er lagt i databasen.';
+
+### HVIS VI SKAL GÅ LANGT TILBAKE
+if (isset( $_GET['deepdive'] ) ) {
+	echo '<br>Går videre til neste sett nå...';
+	echo '<script>window.location = "http://insta.ukm.no?deepdive=true&max_tag_id='.$max_tag_id.'"</script>';
 }
 
 #var_dump($response);
