@@ -106,7 +106,7 @@ if ($res) {
 		$lagrede_bilder[] = $row['insta_id'];
 	}	
 }
-else echo 'Ingen nyere bilder funnet i databasen.';
+else echo '<br>Ingen nyere bilder funnet i databasen.';
 
 $imageList = array();
 #var_dump($images);
@@ -126,7 +126,7 @@ echo "<br>".count($imageList)." nye bilder funnet.";
 #var_dump($imageList);
 foreach ($imageList as $image) {
 	### LEGG TIL / SJEKK OM BRUKEREN ER LAGT TIL I DATABASEN
-	var_dump($image);
+	#var_dump($image);
 	$sql = new SQL("SELECT `id` FROM `ukm_insta_users`
 					WHERE `username` = '#username'", array('username' => $image->user->username));
 	echo $sql->debug();
@@ -183,14 +183,23 @@ foreach ($imageList as $image) {
 
 	echo $sql->debug();
 	$res = $sql->run();
+	$img_id = $sql->insid();
 	if(!$res) {
 		echo '<br><b>Feilet å legge til bilde!</b>';
-	}
-	else {
-		echo '<br>Done.';
+		continue
 	}
 
 	### LEGG TIL TAGGER I RELASJONSTABELL
+	echo '<br>Legger til tagger i relasjonstabell.';
+	foreach ($tags as $tag_id => $tag) {
+		$sql = new SQLins('ukm_insta_rel_img_tag');
+		$sql->add('img_id', $img_id);
+		$sql->add('tag_id', $tag_id);
+		$res = $sql->run();
+		if(!$res) continue;
+		echo '<br>Tag '. $tag.' lagt til i relasjonstabell.';
+	}
+	echo '<br>Done.';
 	die();
 
 }
