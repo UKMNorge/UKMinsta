@@ -200,8 +200,6 @@ foreach ($imageList as $image) {
 		echo '<br>Tag '. $tag.' lagt til i relasjonstabell.';
 	}
 	echo '<br>Done.';
-	die();
-
 }
 
 #var_dump($response);
@@ -214,7 +212,7 @@ foreach ($imageList as $image) {
 // KOBLE TIL API
 #$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
 #$res = $dropbox->save_url()
-$db_endpoint = 'https://api.dropboxapi.com/2/files/save_url';
+#$db_endpoint = 'https://api.dropboxapi.com/2/files/save_url';
 
 #$curl = new UKMCURL();
 #$curl->post(array('path' => $db_save_path, 'url' => $image['url']));
