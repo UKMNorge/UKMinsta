@@ -177,7 +177,7 @@ foreach ($imageList as $image) {
 	}
 
 	### LEGG TIL BILDET I DATABASEN
-	echo '<br>Legger til bildet.';
+	echo '<br>Legger til bilde '.$image->id.'.';
 	$sql = new SQLins('ukm_insta_bilder');
 	$sql->add('insta_id', $image->id);
 	$sql->add('user_id', $user_id);
