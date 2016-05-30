@@ -96,7 +96,7 @@ $nyere_enn = $last->created_time;
 $qry = new SQL("SELECT * FROM `#table` 
 				WHERE 	`created_time` > '#nyere_enn'",
 				array('table' => $table, 'tag' => $search_tag, 'nyere_enn' => $nyere_enn));
-echo $qry->debug();
+#echo $qry->debug();
 $res = $qry->run();
 #var_dump($res);
 $lagrede_bilder = array();
@@ -129,7 +129,7 @@ foreach ($imageList as $image) {
 	#var_dump($image);
 	$sql = new SQL("SELECT `id` FROM `ukm_insta_users`
 					WHERE `username` = '#username'", array('username' => $image->user->username));
-	echo $sql->debug();
+	#echo $sql->debug();
 	$user_id = $sql->run('field', 'id');
 	if(!$user_id) {
 		echo '<br>Oppretter ny bruker '.$image->user->username.'.';
@@ -181,7 +181,7 @@ foreach ($imageList as $image) {
 	$sql->add('created_time', $image->created_time);
 	$sql->add('upload_status', 'new');
 
-	echo $sql->debug();
+	#echo $sql->debug();
 	$res = $sql->run();
 	$img_id = $sql->insid();
 	if(!$res) {
