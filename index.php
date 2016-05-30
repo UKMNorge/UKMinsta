@@ -60,7 +60,7 @@ $images = $response->body->data;
 $imageList = array();
 foreach ( $images as $image ){
         #echo '<br>image<br>\r\n';
-        #var_dump ($image);
+        var_dump ($image);
         #var_dump($image->images->standard_resolution->url);
         $id = $image->id;
         $imageList[$id]['url'] = $image->images->standard_resolution->url;
@@ -78,7 +78,7 @@ var_dump($imageList);
 #$res = $dropbox->save_url()
 $db_endpoint = 'https://api.dropboxapi.com/2/files/save_url';
 
-$curl = new UKMCURL();
-$curl->post(array('path' => $db_save_path, 'url' => $image['url']));
+#$curl = new UKMCURL();
+#$curl->post(array('path' => $db_save_path, 'url' => $image['url']));
 
 ?>
