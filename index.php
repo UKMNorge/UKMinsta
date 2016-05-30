@@ -130,7 +130,7 @@ foreach ($imageList as $image) {
 	$sql = new SQL("SELECT `id` FROM `ukm_insta_users`
 					WHERE `username` = '#username'", array('username' => $image->user->username));
 	echo $sql->debug();
-	$user_id = $sql->run("field", "id");
+	$user_id = $sql->run('field', 'id');
 	if(!$user_id) {
 		echo '<br>Oppretter ny bruker '.$image->user->username.'.';
 
@@ -146,7 +146,7 @@ foreach ($imageList as $image) {
 		if(!$res) continue;
 		$user_id = $sql->insid();
 	}
-	echo '<br>Bruker '.$image->user->username.' har id '.var_dump($user_id).'.';
+	echo '<br>Bruker '.$image->user->username.' har id '.$user_id.'.';
 	
 	### LEGG TIL / SJEKK OM TAGS ER LAGT TIL I DATABASEN
 	echo '<br>Søker opp tagger...';
