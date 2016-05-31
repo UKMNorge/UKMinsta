@@ -1,4 +1,5 @@
 <?php
+ob_end_clean();
 
 require_once('UKM/sql.class.php');
 require_once('UKM/inc/dropbox.inc.php');
@@ -40,7 +41,6 @@ if (mysql_num_rows($res) == 0) {
 out( mysql_num_rows($res).' filer er ikke lastet opp til Dropbox.' );
 
 ### BEGYNN PÅ KØEN
-ob_start();
 while ($r = mysql_fetch_assoc($res)) {
 	
 	out('Bilde-info: ');
