@@ -67,7 +67,9 @@ while ($r = mysql_fetch_assoc($res)) {
 	# Koble til API
 	$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
 	# Gjør oplasting
-	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $tmp_filename, null);
+	$file = fopen($tmp_filename, "rb");
+	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, null);
+	fclose($file);
 	# Resultat:
 	echo '<br>Dropbox-upload-resultat: ';
 	echo '<br><pre>';
