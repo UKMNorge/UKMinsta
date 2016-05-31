@@ -86,12 +86,3 @@ while ($r = mysql_fetch_assoc($res)) {
 
 	die();
 }
-
-
-// KOBLE TIL API
-
-#$res = $dropbox->save_url()
-#$db_endpoint = 'https://api.dropboxapi.com/2/files/save_url';
-
-#$curl = new UKMCURL();
-#$curl->post(array('path' => $db_save_path, 'url' => $image['url']));
