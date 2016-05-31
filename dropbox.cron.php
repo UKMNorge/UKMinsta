@@ -20,11 +20,16 @@ if($res)
 	echo '<br>'.mysql_num_rows($res).' filer holder på med opplasting.';
 
 ### TELL ANTALL FILER SOM IKKE ER LASTET OPP
-$qry = new SQL("SELECT * FROM `ukm_insta_bilder` AS `img`
-				JOIN `ukm_insta_users` AS `u` 
-				ON (`img`.`user_id` = `u`.`id`)
-				WHERE `upload_status` = 'new'
-				ORDER BY `img`.`id` ASC");
+$qry = new SQL("SELECT *,
+				`i`.`id` AS `image_id`,
+				`u`.`id` AS `user_id`,
+				`i`.`url` AS `url`,
+				`u`.`url` AS `user_url`
+				FROM `ukm_insta_bilder` AS `i`
+					JOIN `ukm_insta_users` AS `u` 
+					ON (`i`.`user_id` = `u`.`id`)
+					WHERE `upload_status` = 'new'
+					ORDER BY `i`.`id` ASC");
 echo '<br>'. $qry->debug();
 $res = $qry->run();
 if (mysql_num_rows($res) == 0) {
