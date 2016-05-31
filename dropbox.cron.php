@@ -3,15 +3,53 @@
 require_once('UKM/sql.class.php');
 require_once('imagick.php');
 
-### Denne filen gjennomfører opplasting av filer til dropbox fra en liste i databasen
+### KONSTANTER
+$tmp_filename = 'tmp_image.png';
+$dropbox_base_folder = '/UKMinsta/';
 
-### TELL ANTALL FILER SOM IKKE ER LASTET OPP
+### Denne filen gjennomfører opplasting av filer til dropbox fra en liste i databasen
+echo '<br><b>Dropbox-cron</b>';
+
+
+### SJEKK FILER SOM ER IN PROGRESS
 $qry = new SQL("SELECT * FROM `ukm_insta_bilder` 
-				WHERE `upload_status` = 'new'");
+				WHERE `upload_status` = 'PENDING'");
 echo $qry->debug();
 $res = $qry->run();
+if($res)
+	echo '<br>'.mysql_num_rows($res).' filer holder på med opplasting.';
+
+### TELL ANTALL FILER SOM IKKE ER LASTET OPP
+$qry = new SQL("SELECT * FROM `ukm_insta_bilder` AS `img`
+				JOIN `ukm_insta_users` AS `u` 
+				ON (`img`.`user_id` = `u`.`id`)
+				WHERE `upload_status` = 'new'
+				ORDER BY `img`.`id` ASC");
+echo '<br>'. $qry->debug();
+$res = $qry->run();
+if (mysql_num_rows($res) == 0) {
+	die('<br>Alle filer er lastet opp.');
+}
 echo '<br>'.mysql_num_rows($res).' filer er ikke lastet opp til Dropbox.';
-### 
+
+### BEGYNN PÅ KØEN
+while ($r = mysql_fetch_assoc($res)) {
+	echo '<br>Bilde-info: ';
+	echo '<br><pre>';
+	var_dump($r);
+	echo '</pre>';
+	### FINN BILDEDETALJER
+	$image_folder = $r['search_tag'];
+	$image_filename = $r['username'].$r['insta_id'];
+
+	### SEND BILDET TIL IMAGICK
+
+	### LAST OPP BILDET
+	#$res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . $image_filename , Dropbox\WriteMode::add(), $file, $size);
+	#$success = $res['bytes'] == $size;
+
+	die();
+}
 
 
 // KOBLE TIL API
