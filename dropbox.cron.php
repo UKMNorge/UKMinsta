@@ -40,11 +40,11 @@ while ($r = mysql_fetch_assoc($res)) {
 	echo '</pre>';
 	### FINN BILDEDETALJER
 	$image_folder = $r['search_tag'];
-	$image_filename = $r['username'].$r['insta_id'];
+	$image_filename = $r['username'] . '_' . $r['insta_id'];
 	
 	echo '<br>Mappe: '.$image_folder;
 	echo '<br>Fil: '.$image_filename;
-	echo '<br>Dropbox-path: ' . $dropbox_base_folder . $image_folder . '_' . $image_filename;
+	echo '<br>Dropbox-path: ' . $dropbox_base_folder . $image_folder . '/' . $image_filename;
 	### SEND BILDET TIL IMAGICK
 
 	### LAST OPP BILDET
