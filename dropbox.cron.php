@@ -50,6 +50,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
 	$image_caption = $r['caption'];
 	$image_username = '@'.$r['username'];
+	$db_path = $dropbox_base_folder . $image_folder . '/' . $image_filename;
 	if ($r['nicename']) {
 		$image_username .= ' - ' . $r['nicename'];
 	}
@@ -58,7 +59,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	echo '<br>Mappe: '.$image_folder;
 	echo '<br>Fil: '.$image_filename;
 	echo '<br>Caption: '.$image_caption;
-	echo '<br>Dropbox-path: ' . $dropbox_base_folder . $image_folder . '/' . $image_filename;
+	echo '<br>Dropbox-path: ' . $db_path;
 	
 	### SEND BILDET TIL IMAGICK
 	$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
@@ -68,7 +69,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
 	# Gjør oplasting
 	$file = fopen($tmp_filename, "rb");
-	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '/' . $image_filename , Dropbox\WriteMode::add(), $file, null);
+	$db_res = $dropbox->uploadFile($db_path, Dropbox\WriteMode::add(), $file, null);
 	fclose($file);
 	# Resultat:
 	echo '<br>Dropbox-upload-resultat: ';
