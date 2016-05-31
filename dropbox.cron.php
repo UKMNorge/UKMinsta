@@ -4,6 +4,8 @@ require_once('UKM/sql.class.php');
 require_once('UKM/inc/dropbox.inc.php');
 require_once('imagick.php');
 
+ob_start();
+
 ### KONSTANTER
 $tmp_filename = 'tmp_image.jpg';
 $dropbox_base_folder = '/UKMdigark/UKMinsta/'. date("Y").'/';
@@ -41,6 +43,8 @@ out( mysql_num_rows($res).' filer er ikke lastet opp til Dropbox.' );
 
 ### BEGYNN PÅ KØEN
 while ($r = mysql_fetch_assoc($res)) {
+	ob_flush();
+	ob_start();
 	out('Bilde-info: ');
 	print_r($r);
 	### FINN BILDEDETALJER
@@ -102,6 +106,8 @@ while ($r = mysql_fetch_assoc($res)) {
 		$SQLins->run();	
 	}
 }
+ob_flush();
+ob_clean();
 
 function out($string, $tag = false) {
 	if($tag) {
