@@ -44,6 +44,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	var_dump($r);
 	echo '</pre>';
 	### FINN BILDEDETALJER
+	$image_id = $r['id'];
 	$image_folder = $r['search_tag'];
 	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
 	$image_caption = $r['caption'];
@@ -62,8 +63,22 @@ while ($r = mysql_fetch_assoc($res)) {
 	$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
 	echo '<img src="'.$tmp_filename.'">';
 	### LAST OPP BILDET
-	#$res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, $size);
-	#$success = $res['bytes'] == $size;
+	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, $size);
+	echo '<br>Dropbox-upload-resultat: ';
+	echo '<br><pre>';
+	var_dump($db_res);
+	echo '</pre>';
+	$success = $db_res['bytes'] == $size;
+	if( $success ) {		
+		$SQLins = new SQLins('ukm_insta_bilder', array('id' => $image_id ) );
+		$SQLins->add('upload_status', 'COMPLETE');
+		$SQLins->run();
+	}
+	else {
+		$SQLins = new SQLins('ukm_insta_bilder', array('id' => $image_id ) );
+		$SQLins->add('upload_status', 'ERROR');
+		$SQLins->run();	
+	}
 
 	die();
 }
