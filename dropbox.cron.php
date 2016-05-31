@@ -6,7 +6,7 @@ require_once('imagick.php');
 
 ### KONSTANTER
 $tmp_filename = 'tmp_image.jpg';
-$dropbox_base_folder = '/UKMinsta/';
+$dropbox_base_folder = '/UKMdigark/UKMinsta/'. date("Y").'/';
 
 ### Denne filen gjennomfører opplasting av filer til dropbox fra en liste i databasen
 echo '<br><b>Dropbox-cron</b>';
@@ -68,7 +68,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
 	# Gjør oplasting
 	$file = fopen($tmp_filename, "rb");
-	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, null);
+	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '/' . $image_filename , Dropbox\WriteMode::add(), $file, null);
 	fclose($file);
 	# Resultat:
 	echo '<br>Dropbox-upload-resultat: ';
