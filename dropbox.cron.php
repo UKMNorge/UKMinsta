@@ -63,7 +63,11 @@ while ($r = mysql_fetch_assoc($res)) {
 	$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
 	echo '<img src="'.$tmp_filename.'">';
 	### LAST OPP BILDET
+	# Koble til API
+	$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
+	# Gjør oplasting
 	$db_res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, $size);
+	# Resultat:
 	echo '<br>Dropbox-upload-resultat: ';
 	echo '<br><pre>';
 	var_dump($db_res);
@@ -85,7 +89,7 @@ while ($r = mysql_fetch_assoc($res)) {
 
 
 // KOBLE TIL API
-#$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
+
 #$res = $dropbox->save_url()
 #$db_endpoint = 'https://api.dropboxapi.com/2/files/save_url';
 
