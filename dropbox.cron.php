@@ -101,7 +101,6 @@ while ($r = mysql_fetch_assoc($res)) {
 		$SQLins->add('upload_status', 'ERROR');
 		$SQLins->run();	
 	}
-	die();
 }
 
 function out($string, $tag = false) {
