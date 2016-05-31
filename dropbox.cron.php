@@ -41,7 +41,9 @@ while ($r = mysql_fetch_assoc($res)) {
 	### FINN BILDEDETALJER
 	$image_folder = $r['search_tag'];
 	$image_filename = $r['username'].$r['insta_id'];
-
+	
+	echo '<br>Mappe: '.$image_folder;
+	echo '<br>Fil: '.$image_filename;
 	### SEND BILDET TIL IMAGICK
 
 	### LAST OPP BILDET
