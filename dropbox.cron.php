@@ -47,13 +47,17 @@ while ($r = mysql_fetch_assoc($res)) {
 	$image_folder = $r['search_tag'];
 	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
 	$image_caption = $r['caption'];
+	$image_username = $r['username'];
+	$image_file = $r['url'];
 	
 	echo '<br>Mappe: '.$image_folder;
 	echo '<br>Fil: '.$image_filename;
 	echo '<br>Caption: '.$image_caption;
 	echo '<br>Dropbox-path: ' . $dropbox_base_folder . $image_folder . '/' . $image_filename;
+	
 	### SEND BILDET TIL IMAGICK
-
+	$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
+	echo '<img src="'.$tmp_filename.'">';
 	### LAST OPP BILDET
 	#$res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, $size);
 	#$success = $res['bytes'] == $size;
