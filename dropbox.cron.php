@@ -11,13 +11,12 @@ $dropbox_base_folder = '/UKMdigark/UKMinsta/'. date("Y").'/';
 ### Denne filen gjennomfører opplasting av filer til dropbox fra en liste i databasen
 echo '<br><b>Dropbox-cron</b>';
 
-
 ### SJEKK FILER SOM ER IN PROGRESS
 $qry = new SQL("SELECT * FROM `ukm_insta_bilder` 
 				WHERE `upload_status` = 'PENDING'");
-echo $qry->debug();
+#echo $qry->debug();
 $res = $qry->run();
-if($res)
+if(mysql_num_rows($res) > 0)
 	echo '<br>'.mysql_num_rows($res).' filer holder på med opplasting.';
 
 ### TELL ANTALL FILER SOM IKKE ER LASTET OPP
