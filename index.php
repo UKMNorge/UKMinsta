@@ -34,7 +34,7 @@ $table = 'ukm_insta_bilder';
 #			- caption = Bildetekst
 #			- created_time = Tidspunkt bildet ble lastet opp på instagram
 #			- dropbox_job_id = Jobb-ID fra Dropbox
-# 			- upload_status = Status fra Dropbox. { NEW, PENDING, DOWNLOADING, COMPLETE, FAILED }
+# 			- upload_status = Status fra Dropbox. { new, PENDING, DOWNLOADING, COMPLETE, FAILED }
 # 				- New er før registrert med Dropbox,
 #	# ukm_insta_rel_img_tag
 #		- id, img_id, tag_id

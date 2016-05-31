@@ -21,7 +21,7 @@ if($res)
 
 ### TELL ANTALL FILER SOM IKKE ER LASTET OPP
 $qry = new SQL("SELECT *,
-				`i`.`id` AS `image_id`,
+				`i`.`id` AS `id`,
 				`u`.`id` AS `user_id`,
 				`i`.`url` AS `url`,
 				`u`.`url` AS `user_url`
@@ -46,9 +46,11 @@ while ($r = mysql_fetch_assoc($res)) {
 	### FINN BILDEDETALJER
 	$image_folder = $r['search_tag'];
 	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
+	$image_caption = $r['caption'];
 	
 	echo '<br>Mappe: '.$image_folder;
 	echo '<br>Fil: '.$image_filename;
+	echo '<br>Caption: '.$image_caption;
 	echo '<br>Dropbox-path: ' . $dropbox_base_folder . $image_folder . '/' . $image_filename;
 	### SEND BILDET TIL IMAGICK
 
