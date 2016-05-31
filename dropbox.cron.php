@@ -47,7 +47,10 @@ while ($r = mysql_fetch_assoc($res)) {
 	$image_folder = $r['search_tag'];
 	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
 	$image_caption = $r['caption'];
-	$image_username = $r['username'];
+	$image_username = '@'.$r['username'];
+	if ($r['nicename']) {
+		$image_username .= ' - ' . $r['nicename'];
+	}
 	$image_file = $r['url'];
 	
 	echo '<br>Mappe: '.$image_folder;
