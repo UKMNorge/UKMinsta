@@ -40,7 +40,7 @@ if (mysql_num_rows($res) == 0) {
 out( mysql_num_rows($res).' filer er ikke lastet opp til Dropbox.' );
 
 ### BEGYNN PÅ KØEN
-ob_end_flush();
+ob_start();
 while ($r = mysql_fetch_assoc($res)) {
 	
 	out('Bilde-info: ');
@@ -74,6 +74,7 @@ while ($r = mysql_fetch_assoc($res)) {
 		$SQLins = new SQLins('ukm_insta_bilder', array('id' => $image_id ) );
 		$SQLins->add('upload_status', 'IMAGICK_ERROR');
 		$SQLins->run();	
+		ob_flush();
 		flush();
 		continue;
 	}
@@ -103,6 +104,7 @@ while ($r = mysql_fetch_assoc($res)) {
 		$SQLins->add('upload_status', 'ERROR');
 		$SQLins->run();	
 	}
+	ob_flush();
 	flush();
 }
 
