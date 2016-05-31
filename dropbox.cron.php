@@ -63,8 +63,21 @@ while ($r = mysql_fetch_assoc($res)) {
 	echo '<br>Dropbox-path: ' . $db_path;
 	
 	### SEND BILDET TIL IMAGICK
-	$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
-	echo '<img src="'.$tmp_filename.'">';
+	try {
+		$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
+		echo '<img src="'.$tmp_filename.'">';
+	}
+	catch(Exception $e) {
+		echo '<br><b>Imagick feilet på bildet: ',  $e->getMessage(), "\n";
+		echo '</b>';
+		echo '<br>Markerer bildet som IMAGICK_ERROR og går videre.';
+
+		$SQLins = new SQLins('ukm_insta_bilder', array('id' => $image_id ) );
+		$SQLins->add('upload_status', 'IMAGICK_ERROR');
+		$SQLins->run();	
+
+		continue;
+	}
 	### LAST OPP BILDET
 	# Koble til API
 	$dropbox = new Dropbox\Client( DROPBOX_AUTH_ACCESS_TOKEN, DROPBOX_APP_NAME, 'UTF-8' );
@@ -83,6 +96,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	if( $success ) {		
 		$SQLins = new SQLins('ukm_insta_bilder', array('id' => $image_id ) );
 		$SQLins->add('upload_status', 'COMPLETE');
+		$SQLins->add('dropbox_path', $db_path);
 		$SQLins->run();
 	}
 	else {
@@ -90,5 +104,5 @@ while ($r = mysql_fetch_assoc($res)) {
 		$SQLins->add('upload_status', 'ERROR');
 		$SQLins->run();	
 	}
-
+	die();
 }
