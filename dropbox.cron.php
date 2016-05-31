@@ -44,10 +44,11 @@ while ($r = mysql_fetch_assoc($res)) {
 	
 	echo '<br>Mappe: '.$image_folder;
 	echo '<br>Fil: '.$image_filename;
+	echo '<br>Dropbox-path: ' . $dropbox_base_folder . $image_folder . '_' . $image_filename;
 	### SEND BILDET TIL IMAGICK
 
 	### LAST OPP BILDET
-	#$res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . $image_filename , Dropbox\WriteMode::add(), $file, $size);
+	#$res = $dropbox->uploadFile($dropbox_base_folder . $image_folder . '_' . $image_filename , Dropbox\WriteMode::add(), $file, $size);
 	#$success = $res['bytes'] == $size;
 
 	die();
