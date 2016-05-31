@@ -87,8 +87,8 @@ while ($r = mysql_fetch_assoc($res)) {
 	fclose($file);
 	# Resultat:
 	out('Dropbox-upload-resultat: ');
-	print_r($db_res);
-	
+	out(print_r($db_res));
+
 	$success = $db_res['bytes'] == $size;
 	if( $success ) {		
 		$SQLins = new SQLins('ukm_insta_bilder', array('id' => $image_id ) );
