@@ -91,5 +91,4 @@ while ($r = mysql_fetch_assoc($res)) {
 		$SQLins->run();	
 	}
 
-	die();
 }
