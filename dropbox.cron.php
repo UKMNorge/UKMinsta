@@ -1,6 +1,7 @@
 <?php
 
 require_once('UKM/sql.class.php');
+require_once('UKM/inc/dropbox.inc.php');
 require_once('imagick.php');
 
 ### KONSTANTER
