@@ -4,7 +4,7 @@ require_once('UKM/sql.class.php');
 require_once('imagick.php');
 
 ### KONSTANTER
-$tmp_filename = 'tmp_image.png';
+$tmp_filename = 'tmp_image.jpg';
 $dropbox_base_folder = '/UKMinsta/';
 
 ### Denne filen gjennomfører opplasting av filer til dropbox fra en liste i databasen
@@ -40,7 +40,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	echo '</pre>';
 	### FINN BILDEDETALJER
 	$image_folder = $r['search_tag'];
-	$image_filename = $r['username'] . '_' . $r['insta_id'];
+	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
 	
 	echo '<br>Mappe: '.$image_folder;
 	echo '<br>Fil: '.$image_filename;
