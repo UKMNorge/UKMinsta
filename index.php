@@ -152,7 +152,7 @@ foreach ($imageList as $image) {
 
 		#echo $sql->debug();
 		$res = $sql->run();
-		if(!$res) {
+		if( !$res || $sql->error() ) {
 			echo '<br><b>'.$sql->error().'.</b>';
 			continue;
 		}
@@ -172,7 +172,7 @@ foreach ($imageList as $image) {
 			$sql = new SQLins('ukm_insta_tags');
 			$sql->add('tag', $tag);
 			$res = $sql->run();
-			if(!$res) {
+			if(!$res || $sql->error()) {
 				echo '<br><b>'.$sql->error().'.</b>';
 				continue;
 			}
@@ -212,7 +212,7 @@ foreach ($imageList as $image) {
 		$sql->add('img_id', $img_id);
 		$sql->add('tag_id', $tag_id);
 		$res = $sql->run();
-		if(!$res) {
+		if(!$res || $sql->error()) {
 			echo '<br><b>'.$sql->error().'.</b>';
 			continue;
 		}
