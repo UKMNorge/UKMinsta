@@ -139,10 +139,10 @@ function out($string, $tag = false) {
 ### Credit: @sglessard - http://stackoverflow.com/questions/12807176/php-writing-a-simple-removeemoji-function
 function removeEmoji($text) {
 
-    $clean_text = "";
-
+    $clean_text = $text;
+    #$text = utf8_encode($clean_text);
     // Match linebreaks
-   # $clean_text = preg_replace( "/\r|\n/", "", $text );
+    # $clean_text = preg_replace( "/\r|\n/", "", $clean_text );
     // Match Emoticons
     $regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
     $clean_text = preg_replace($regexEmoticons, '', $clean_text);
