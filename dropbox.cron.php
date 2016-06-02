@@ -52,19 +52,22 @@ while ($r = mysql_fetch_assoc($res)) {
 	$image_caption = $r['caption'];
 	$image_username = '@'.$r['username'];
 	$db_path = $dropbox_base_folder . $image_folder . '/' . $image_filename;
-	if ($r['nicename']) {
-		$image_username .= ' - ' . $r['nicename'];
+	$image_nicename = null;
+	if ( !empty( $r['nicename'] ) ) {
+		$image_nicename = $r['nicename']; #$image_username .= ' - ' . $r['nicename'];
 	}
 	$image_file = $r['url'];
 	
-	out('Mappe: '.$image_folder);
-	out('Fil: '.$image_filename);
-	out('Caption: '.$image_caption);
+	out('Mappe: ' . $image_folder);
+	out('Fil: ' . $image_filename);
+	out('Navn: ' . $image_nicename);
+	out('Brukernavn: ' . $image_username);
+	out('Caption: ' . $image_caption);
 	out('Dropbox-path: ' . $db_path);
 	
 	### SEND BILDET TIL IMAGICK
 	try {
-		$img_res = ukm_wrap($image_file, $tmp_filename, $image_username, $image_caption, null);
+		$img_res = ukm_wrap($image_file, $tmp_filename, $image_nicename, $image_username, $image_caption, null);
 		echo '<img src="'.$tmp_filename.'">';
 	}
 	catch(Exception $e) {

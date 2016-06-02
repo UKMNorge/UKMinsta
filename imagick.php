@@ -2,18 +2,28 @@
 // DATA
 /*$imagepath_read = 'testimage.jpg';
 $imagepath_write = 'testimage_new.png';
-$username = '';
+$name = 'Marius Mandal';
+$username = '@mariusmandal';
 $caption = 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text.';
-$tags = '#wow #denne #kan #bli #lang #og #veldigstygg #men #er #verdt #et #forsøk #There #are #manyvariationsofpassages #of #LoremIpsum';*/
+$tags = '#wow #denne #kan #bli #lang #og #veldigstygg #men #er #verdt #et #forsøk #There #are #manyvariationsofpassages #of #LoremIpsum';
+*/
 
-
-function ukm_wrap($imagepath_read, $imagepath_write, $username, $caption, $tags) {
+function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption, $tags) {
     // FONT SIZE AND COLOR
-    $username_fontsize = 20;
-    $username_fontcolor = '#000';
-    $username_font = 'ITCAvantGardePro-Bold.otf';
+    $name_fontsize = 22;
+    $name_fontcolor = '#000';
+    $name_font = 'ITCAvantGardePro-Bold.otf';
 
-    $caption_fontsize = 14;
+    if( empty( $name ) ) {
+        $username_fontsize = $name_fontsize;
+        $username_fontcolor = $name_fontcolor;
+    } else {
+        $username_fontsize = 18;
+        $username_fontcolor = '#363636';    
+    }
+    $username_font = 'ITCAvantGardePro-Md.otf';
+
+    $caption_fontsize = 16;
     $caption_fontcolor = '#000';
     $caption_font = 'ITCAvantGardePro-Bk.otf';
     $caption_margin = 4;
@@ -23,6 +33,9 @@ function ukm_wrap($imagepath_read, $imagepath_write, $username, $caption, $tags)
     $tags_font = 'ITCAvantGardePro-Md.otf';
 
     $textfield_margin = 10;
+    $textfield_top_margin = 10;
+
+    $name_username_margin = empty( $name ) ? 0 : 6;
 
     //////////////////////////////////////////////
     // DO THE MAGIC
@@ -36,7 +49,7 @@ function ukm_wrap($imagepath_read, $imagepath_write, $username, $caption, $tags)
 
     // CREATE PALETTE
     $palette = new Imagick();
-    $palette->newImage($image_width, $image_height, new ImagickPixel('#ff00ff'));
+    $palette->newImage($image_width, $image_height, new ImagickPixel('#fff'));
     $palette->setImageFormat('png');
 
     // CREATE USERNAME
@@ -46,29 +59,40 @@ function ukm_wrap($imagepath_read, $imagepath_write, $username, $caption, $tags)
     $username_palette->setFillColor( $username_fontcolor );
     $username_palette->setGravity(Imagick::GRAVITY_SOUTHWEST);
 
+    // CREATE USERNAME
+    $name_palette = new ImagickDraw();
+    $name_palette->setFont('font/'. $name_font );
+    $name_palette->setFontSize( $name_fontsize );
+    $name_palette->setFillColor( $name_fontcolor );
+    $name_palette->setGravity(Imagick::GRAVITY_SOUTHWEST);
+
     // CREATE CAPTION
     $caption_palette = new ImagickDraw();
     $caption_palette->setFont('font/'. $caption_font );
     $caption_palette->setFontSize( $caption_fontsize );
     $caption_palette->setFillColor( $caption_fontcolor );
-    $caption_palette->setGravity(Imagick::GRAVITY_NORTHWEST);
+    $caption_palette->setGravity(Imagick::GRAVITY_SOUTHWEST);
 
     // CREATE TAGS
     $tags_palette = new ImagickDraw();
     $tags_palette->setFont('font/'. $tags_font );
     $tags_palette->setFontSize( $tags_fontsize );
     $tags_palette->setFillColor( $tags_fontcolor );
-    $tags_palette->setGravity(Imagick::GRAVITY_NORTHWEST);
+    $tags_palette->setGravity(Imagick::GRAVITY_SOUTHWEST);
 
     // CALCULATE TEXT LINES (CAPTION + TAGS)
     list($caption_lines, $caption_fontsize) = wordWrapAnnotation($palette, $caption_palette, $caption, $image_width-($textfield_margin*2) );
     list($tags_lines, $tags_fontsize) = wordWrapAnnotation($palette, $tags_palette, $tags, $image_width-($textfield_margin*2) );
 
     // CALCULATE PALETTE SIZE
-    $tags_height 		= $tags_fontsize * sizeof( $tags_lines );
-    $caption_height 	= $caption_fontsize * sizeof( $caption_lines );
-    $username_height 	= $username_fontsize;
-    $height_textfield 	= $tags_height + $caption_height+($caption_margin*2) + $username_height + ($textfield_margin * 2);
+    $tags_height        = $tags_fontsize * sizeof( $tags_lines );
+    $caption_height     = $caption_fontsize * sizeof( $caption_lines );
+    $username_height    = $username_fontsize;
+    $height_textfield   = $textfield_top_margin*2 // Legg på margin over og under tekst
+                         + $name_fontsize       // Høyde på navnet (brukernavn krever mindre plass)
+                         + $caption_height      // Høyde på selve caption
+                         + $caption_margin      // Margin mellom caption og tags
+                         + $tags_height;        // Høyde på tags
 
     // RE-CREATE PALETTE INCLUDING TEXTFIELD HEIGHT
     $palette = new Imagick();
@@ -78,29 +102,39 @@ function ukm_wrap($imagepath_read, $imagepath_write, $username, $caption, $tags)
     // ADD IMAGE TO PALETTE
     $palette->compositeImage($image, Imagick::COMPOSITE_DEFAULT, 0, 0); 
 
-    // ADD USERNAME
-    $palette->annotateImage($username_palette, $textfield_margin, ($height_textfield - $username_fontsize - $textfield_margin), 0, $username);
+    // WRITE STUFF
+        // ADD NAME
+        $name_offset_x = $textfield_margin;
+        $name_offset_y = $height_textfield - $textfield_top_margin - $name_fontsize;
+        $palette->annotateImage($name_palette, $name_offset_x, $name_offset_y, 0, $name);
 
-    // ADD CAPTION
-    $caption_vertical_offset = $image_height + $textfield_margin + $username_fontsize + $caption_margin;
-    for($i = 0; $i < count($caption_lines); $i++) {
-    	$text_height = $i * $caption_fontsize;
-        $palette->annotateImage($caption_palette, $textfield_margin, ($caption_vertical_offset + $text_height), 0, $caption_lines[$i]);
-    }
-
-    // ADD TAGS
-    $tags_vertical_offset = $image_height + $textfield_margin + $username_fontsize + $caption_margin + $caption_height + $caption_margin;
-    for($i = 0; $i < count($tags_lines); $i++) {
-    	$text_height = $i * $tags_fontsize;
-        $palette->annotateImage($tags_palette, $textfield_margin, ($tags_vertical_offset + $text_height), 0, $tags_lines[$i]);
-    }
+        $name_metrics = $palette->queryFontMetrics($name_palette, $name);
+        $name_width = $name_metrics['textWidth'];
+        
+        // ADD USERNAME
+        $username_offset_x = $textfield_margin + $name_username_margin + $name_width;
+        $username_offset_y = $name_offset_y + 1;
+        $palette->annotateImage($username_palette, $username_offset_x, $username_offset_y, 0, $username);
+        
+        // ADD CAPTION
+        $caption_offset_x = $textfield_margin;
+        $caption_offset_y = $name_offset_y - $name_fontsize;
+        for($i = 0; $i < count($caption_lines); $i++) {
+            $caption_text_height = $i * $caption_fontsize;
+            $palette->annotateImage($caption_palette, $caption_offset_x, ($caption_offset_y - $caption_text_height), 0, $caption_lines[$i]);
+        }
+        
+        // ADD TAGS
+        $tags_offset_x = $textfield_margin;
+        $tags_offset_y = $caption_offset_y - $caption_text_height - $caption_fontsize - $caption_margin; 
+        for($i = 0; $i < count($tags_lines); $i++) {
+            $text_height = $i * $tags_fontsize;
+            $palette->annotateImage($tags_palette, $textfield_margin, ($tags_offset_y - $text_height), 0, $tags_lines[$i]);
+        }
 
     $palette->setImageFileName( dirname(__FILE__) .'/'. $imagepath_write );
     $res = $palette->writeImage();
     return $res;
-    #header('Content-type: image/png');
-    #echo $palette;
-
 }
 
 
