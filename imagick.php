@@ -94,6 +94,16 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
                          + $caption_margin      // Margin mellom caption og tags
                          + $tags_height;        // Høyde på tags
 
+    if(isset($_GET['debug'])) {
+        echo '<br>Caption height: '. var_export($caption_height, TRUE);
+        echo '<br>Username height: '. var_export($username_height, TRUE);
+        echo '<br>Tags height: '. var_export($tags_height, TRUE);
+        echo '<br>height_textfield: '. var_export($height_textfield, TRUE);
+        echo '<br>caption_lines: '.var_export($caption_lines, TRUE);
+        echo '<br>tags_lines: '.var_export($tags_lines, TRUE);
+        echo '<br>textfield_top_margin: '.var_export($textfield_top_margin, TRUE);
+    }
+
     // RE-CREATE PALETTE INCLUDING TEXTFIELD HEIGHT
     $palette = new Imagick();
     $palette->newImage($image_width, ($image_height+$height_textfield), new ImagickPixel('#fff'));

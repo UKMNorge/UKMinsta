@@ -15,13 +15,19 @@ out('Dropbox-cron', 'b');
 ### SJEKK FILER SOM ER IN PROGRESS
 $qry = new SQL("SELECT * FROM `ukm_insta_bilder` 
 				WHERE `upload_status` = 'PENDING'");
+
+
 #echo $qry->debug();
 $res = $qry->run();
 if(mysql_num_rows($res) > 0)
 	out(mysql_num_rows($res).' filer holder på med opplasting.');
 
 ### TELL ANTALL FILER SOM IKKE ER LASTET OPP
-$qry = new SQL("SELECT *,
+if(isset($_GET['image_id'])) {
+	$qry = new SQL("SELECT * FROM `ukm_insta_bilder` 
+				WHERE `id` = '#id'", array('id' => $_GET['image_id']));
+} else {
+	$qry = new SQL("SELECT *,
 				`i`.`id` AS `id`,
 				`u`.`id` AS `user_id`,
 				`i`.`url` AS `url`,
@@ -33,6 +39,8 @@ $qry = new SQL("SELECT *,
 					ON (`i`.`user_id` = `u`.`id`)
 					WHERE `upload_status` = 'new'
 					ORDER BY `i`.`id` ASC");
+}
+
 out( $qry->debug() );
 $res = $qry->run();
 if (mysql_num_rows($res) == 0) {
