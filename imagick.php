@@ -100,6 +100,7 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
         echo '<br>Tags height: '. var_export($tags_height, TRUE);
         echo '<br>height_textfield: '. var_export($height_textfield, TRUE);
         echo '<br>caption_lines: '.var_export($caption_lines, TRUE);
+        echo '<br>size of caption_lines: '.var_export(sizeof($caption_lines), TRUE);
         echo '<br>tags_lines: '.var_export($tags_lines, TRUE);
         echo '<br>textfield_top_margin: '.var_export($textfield_top_margin, TRUE);
     }
@@ -128,7 +129,7 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
         
         // ADD CAPTION
         $caption_offset_x = $textfield_margin;
-        $caption_offset_y = $name_offset_y; #- $name_fontsize
+        $caption_offset_y = $name_offset_y - $name_fontsize;
         for($i = 0; $i < count($caption_lines); $i++) {
             $caption_text_height = $i * $caption_fontsize;
             $palette->annotateImage($caption_palette, $caption_offset_x, ($caption_offset_y - $caption_text_height), 0, $caption_lines[$i]);
