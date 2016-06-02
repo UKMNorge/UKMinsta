@@ -88,14 +88,16 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
     $tags_height        = $tags_lineHeight * sizeof( $tags_lines );
     $caption_height     = $caption_lineHeight * sizeof( $caption_lines );
     $username_height    = $username_fontsize;
+    $name_height        = $name_fontsize;
     $height_textfield   = $textfield_top_margin*2 // Legg på margin over og under tekst
-                         + $name_fontsize       // Høyde på navnet (brukernavn krever mindre plass)
+                         + $name_fontsize*2       // Høyde på navnet (brukernavn krever mindre plass) - 2 ganger pga caption-name margin
                          + $caption_height      // Høyde på selve caption
                          + $caption_margin      // Margin mellom caption og tags
                          + $tags_height;        // Høyde på tags
 
     if(isset($_GET['debug'])) {
         echo '<br>Caption height: '. var_export($caption_height, TRUE);
+        echo '<br>Name height: '. var_export($name_height, TRUE);
         echo '<br>Username height: '. var_export($username_height, TRUE);
         echo '<br>Tags height: '. var_export($tags_height, TRUE);
         echo '<br>height_textfield: '. var_export($height_textfield, TRUE);
