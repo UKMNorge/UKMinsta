@@ -140,7 +140,7 @@ function out($string, $tag = false) {
 function removeEmoji($text) {
 
     $clean_text = $text;
-    #$text = utf8_encode($clean_text);
+    $clean_text = utf8_encode($clean_text);
     // Match linebreaks
     # $clean_text = preg_replace( "/\r|\n/", "", $clean_text );
     // Match Emoticons
