@@ -24,7 +24,16 @@ if(mysql_num_rows($res) > 0)
 
 ### TELL ANTALL FILER SOM IKKE ER LASTET OPP
 if(isset($_GET['image_id'])) {
-	$qry = new SQL("SELECT * FROM `ukm_insta_bilder` 
+	$qry = new SQL("SELECT 
+				`i`.`id` AS `id`,
+				`u`.`id` AS `user_id`,
+				`i`.`url` AS `url`,
+				`u`.`url` AS `user_url`,
+				`i`.`insta_id` AS `insta_id`,
+				`u`.`insta_id` AS `insta_user_id`
+				FROM `ukm_insta_bilder` AS `i`
+					JOIN `ukm_insta_users` AS `u` 
+					ON (`i`.`user_id` = `u`.`id`)
 				WHERE `id` = '#id'", array('id' => $_GET['image_id']));
 } else {
 	$qry = new SQL("SELECT *,
