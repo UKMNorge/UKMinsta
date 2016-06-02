@@ -24,7 +24,7 @@ if(mysql_num_rows($res) > 0)
 
 ### TELL ANTALL FILER SOM IKKE ER LASTET OPP
 if(isset($_GET['image_id'])) {
-	$qry = new SQL("SELECT 
+	$qry = new SQL("SELECT *,
 				`i`.`id` AS `id`,
 				`u`.`id` AS `user_id`,
 				`i`.`url` AS `url`,
