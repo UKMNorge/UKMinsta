@@ -158,6 +158,9 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
 function wordWrapAnnotation(&$image, &$draw, $text, $maxWidth)
 {
     $words = explode(" ", $text);
+    if(isset($_GET['debug'])) {
+        echo '<br>Count of words: ' . count($words);
+    }
     $lines = array();
     $i = 0;
     $lineHeight = 0;
@@ -173,6 +176,10 @@ function wordWrapAnnotation(&$image, &$draw, $text, $maxWidth)
         $metrics = $image->queryFontMetrics($draw, $currentLine . ' ' . $words[$i+1]);
         while($metrics['textWidth'] <= $maxWidth)
         {
+            if(isset($_GET['debug'])) {
+                echo '<br>textWidth: ' . $metrics['textWidth'];
+                echo '<br>maxWidth: ' . $maxWidth;
+            }
             //If so, do it and keep doing it!
             $currentLine .= ' ' . $words[++$i];
             if($i+1 >= count($words))
