@@ -159,6 +159,7 @@ function wordWrapAnnotation(&$image, &$draw, $text, $maxWidth)
 {
     $words = explode(" ", $text);
     if(isset($_GET['debug'])) {
+        echo '<br>Words: ' . var_export($words, TRUE);
         echo '<br>Count of words: ' . count($words);
     }
     $lines = array();
