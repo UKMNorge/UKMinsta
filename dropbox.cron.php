@@ -5,6 +5,10 @@ require_once('UKM/sql.class.php');
 require_once('UKM/inc/dropbox.inc.php');
 require_once('imagick.php');
 
+define('TIME_LIMIT', 45);
+ini_set('max_execution_time', round(TIME_LIMIT*1.5));
+$time_start = microtime(true);
+ignore_user_abort(TRUE);
 ### KONSTANTER
 $tmp_filename = 'tmp_image.jpg';
 $dropbox_base_folder = '/UKMdigark/UKMinsta/'. date("Y").'/';
@@ -59,7 +63,12 @@ out( mysql_num_rows($res).' filer er ikke lastet opp til Dropbox.' );
 
 ### BEGYNN PÅ KØEN
 while ($r = mysql_fetch_assoc($res)) {
-	
+	// TIME COUNTER
+	if( TIME_LIMIT < ( microtime(true) - $time_start ) ) {
+		out( 'Nådd tidsbegrensning ('. TIME_LIMIT .'sek) og stopper' );
+		die();
+	}
+
 	out('Bilde-info: ');
 	print_r($r);
 	### FINN BILDEDETALJER
