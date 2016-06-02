@@ -34,7 +34,7 @@ if(isset($_GET['image_id'])) {
 				FROM `ukm_insta_bilder` AS `i`
 					JOIN `ukm_insta_users` AS `u` 
 					ON (`i`.`user_id` = `u`.`id`)
-				WHERE `id` = '#id'", array('id' => $_GET['image_id']));
+				WHERE `i`.`id` = '#id'", array('id' => $_GET['image_id']));
 } else {
 	$qry = new SQL("SELECT *,
 				`i`.`id` AS `id`,
