@@ -37,6 +37,8 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
 
     $name_username_margin = empty( $name ) ? 0 : 6;
 
+    $caption_lineDistance = 2;
+
     //////////////////////////////////////////////
     // DO THE MAGIC
 
@@ -86,7 +88,7 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
 
     // CALCULATE PALETTE SIZE
     $tags_height        = $tags_lineHeight * sizeof( $tags_lines );
-    $caption_height     = $caption_lineHeight * sizeof( $caption_lines );
+    $caption_height     = ( $caption_lineHeight + $caption_lineDistance )* sizeof( $caption_lines );
     $username_height    = $username_fontsize;
     $name_height        = $name_fontsize;
     $height_textfield   = $textfield_top_margin*2 // Legg på margin over og under tekst
@@ -137,7 +139,7 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
                 echo '<br>caption line '.$i;
                 echo '<br>Caption on this line: '. $caption_lines[$i];
             }
-            $caption_text_height = $i * $caption_lineHeight;
+            $caption_text_height = $i * ( $caption_lineHeight + $caption_lineDistance );
             $palette->annotateImage($caption_palette, $caption_offset_x, ($caption_offset_y - $caption_text_height), 0, $caption_lines[$i]);
         }
         
