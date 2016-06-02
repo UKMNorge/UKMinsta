@@ -142,7 +142,7 @@ function removeEmoji($text) {
     $clean_text = "";
 
     // Match linebreaks
-    $clean_text = preg_replace( "/\r|\n/", "", $text );
+   # $clean_text = preg_replace( "/\r|\n/", "", $text );
     // Match Emoticons
     $regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
     $clean_text = preg_replace($regexEmoticons, '', $clean_text);
