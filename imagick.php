@@ -131,6 +131,7 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
         $caption_offset_x = $textfield_margin;
         $caption_offset_y = $name_offset_y - $name_fontsize;
         for($i = 0; $i < count($caption_lines); $i++) {
+            if($_GET['debug']) echo '<br>caption line '.$i;
             $caption_text_height = $i * $caption_fontsize;
             $palette->annotateImage($caption_palette, $caption_offset_x, ($caption_offset_y - $caption_text_height), 0, $caption_lines[$i]);
         }
