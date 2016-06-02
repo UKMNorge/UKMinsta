@@ -66,7 +66,7 @@ while ($r = mysql_fetch_assoc($res)) {
 	$image_id = $r['id'];
 	$image_folder = $r['search_tag'];
 	$image_filename = $r['username'] . '_' . $r['insta_id'] . '.jpg';
-	$image_caption = $r['caption'];
+	$image_caption = removeEmoji($r['caption']);
 	$image_username = '@'.$r['username'];
 	$db_path = $dropbox_base_folder . $image_folder . '/' . $image_filename;
 	$image_nicename = null;
@@ -134,4 +134,34 @@ function out($string, $tag = false) {
 	}
 	else
 		echo '<br>'.htmlentities($string);
+}
+
+### Credit: @sglessard - http://stackoverflow.com/questions/12807176/php-writing-a-simple-removeemoji-function
+function removeEmoji($text) {
+
+    $clean_text = "";
+
+    // Match linebreaks
+    $clean_text = preg_replace( "/\r|\n/", "", $text );
+    // Match Emoticons
+    $regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
+    $clean_text = preg_replace($regexEmoticons, '', $clean_text);
+
+    // Match Miscellaneous Symbols and Pictographs
+    $regexSymbols = '/[\x{1F300}-\x{1F5FF}]/u';
+    $clean_text = preg_replace($regexSymbols, '', $clean_text);
+
+    // Match Transport And Map Symbols
+    $regexTransport = '/[\x{1F680}-\x{1F6FF}]/u';
+    $clean_text = preg_replace($regexTransport, '', $clean_text);
+
+    // Match Miscellaneous Symbols
+    $regexMisc = '/[\x{2600}-\x{26FF}]/u';
+    $clean_text = preg_replace($regexMisc, '', $clean_text);
+
+    // Match Dingbats
+    $regexDingbats = '/[\x{2700}-\x{27BF}]/u';
+    $clean_text = preg_replace($regexDingbats, '', $clean_text);
+
+    return $clean_text;
 }
