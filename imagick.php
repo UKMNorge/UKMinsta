@@ -81,12 +81,12 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
     $tags_palette->setGravity(Imagick::GRAVITY_SOUTHWEST);
 
     // CALCULATE TEXT LINES (CAPTION + TAGS)
-    list($caption_lines, $caption_fontsize) = wordWrapAnnotation($palette, $caption_palette, $caption, $image_width-($textfield_margin*2) );
-    list($tags_lines, $tags_fontsize) = wordWrapAnnotation($palette, $tags_palette, $tags, $image_width-($textfield_margin*2) );
+    list($caption_lines, $caption_lineHeight) = wordWrapAnnotation($palette, $caption_palette, $caption, $image_width-($textfield_margin*2) );
+    list($tags_lines, $tags_lineHeight) = wordWrapAnnotation($palette, $tags_palette, $tags, $image_width-($textfield_margin*2) );
 
     // CALCULATE PALETTE SIZE
-    $tags_height        = $tags_fontsize * sizeof( $tags_lines );
-    $caption_height     = $caption_fontsize * sizeof( $caption_lines );
+    $tags_height        = $tags_lineHeight * sizeof( $tags_lines );
+    $caption_height     = $caption_lineHeight * sizeof( $caption_lines );
     $username_height    = $username_fontsize;
     $height_textfield   = $textfield_top_margin*2 // Legg på margin over og under tekst
                          + $name_fontsize       // Høyde på navnet (brukernavn krever mindre plass)
@@ -135,15 +135,15 @@ function ukm_wrap($imagepath_read, $imagepath_write, $name, $username, $caption,
                 echo '<br>caption line '.$i;
                 echo '<br>Caption on this line: '. $caption_lines[$i];
             }
-            $caption_text_height = $i * $caption_fontsize;
+            $caption_text_height = $i * $caption_lineHeight;
             $palette->annotateImage($caption_palette, $caption_offset_x, ($caption_offset_y - $caption_text_height), 0, $caption_lines[$i]);
         }
         
         // ADD TAGS
         $tags_offset_x = $textfield_margin;
-        $tags_offset_y = $caption_offset_y - $caption_text_height - $caption_fontsize - $caption_margin; 
+        $tags_offset_y = $caption_offset_y - $caption_text_height - $caption_lineHeight - $caption_margin; 
         for($i = 0; $i < count($tags_lines); $i++) {
-            $text_height = $i * $tags_fontsize;
+            $text_height = $i * $tags_lineHeight;
             $palette->annotateImage($tags_palette, $textfield_margin, ($tags_offset_y - $text_height), 0, $tags_lines[$i]);
         }
 
