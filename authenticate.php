@@ -8,7 +8,7 @@ require_once('UKMconfig.inc.php');
 
 use Httpful\Request;
 
-$CLIENT_ID = INSTAGRAM_CLIENT_ID;
+$INSTAGRAM_CLIENT_ID = INSTAGRAM_CLIENT_ID;
 
 $redirect_uri = 'http://insta.ukm.no/authenticated.php';
 $authentication_uri = 'https://api.instagram.com/oauth/authorize/?client_id='.$INSTAGRAM_CLIENT_ID.'&redirect_uri='.$redirect_uri.'&response_type=code';
