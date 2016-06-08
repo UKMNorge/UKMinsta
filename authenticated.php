@@ -27,8 +27,20 @@ $curl->post(array(
 					));
 $result = $curl->process($authorization_endpoint);
 
-echo '<br>';
-var_dump($_REQUEST);
+$qry = new SQLins('ukm_insta_config', array('option_name' => 'access_token') );
+$qry->add($result->access_token);
+$res = $qry->run();
 
-echo '<br>Resultat:<pre>';
-var_dump($result);
+if ($res === false) {
+	echo '<br>Klarte ikke lagre access_token i databaden.';
+	echo '<br>'.$qry->error();
+	die();
+}
+else if ($res == 0) {
+	echo '<br>Ingen endringer i databasen.';
+}
+else {
+	echo '<br>Lagret access_token i databasen.';
+}
+
+echo '<br><b>Done.</b>';
