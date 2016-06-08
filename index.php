@@ -71,8 +71,15 @@ $table = 'ukm_insta_bilder';
 
 $CLIENT_ID = INSTAGRAM_CLIENT_ID;
 
-$INSTAGRAM_ACCESS_TOKEN = '';
 
+$qry = new SQL("SELECT `option_value` FROM `ukm_insta_config` WHERE `option_name` = 'access_token'");
+$INSTAGRAM_ACCESS_TOKEN = $qry->run("field", "option_value");
+
+if($INSTAGRAM_ACCESS_TOKEN === false) {
+	echo '<br>Klarte ikke hente ut access_token fra databasen';
+	echo '<br>Feilmelding: '.$qry->error();
+	die();
+}
 #$tag    =  $_GET['hashtag'];
 $search_tag 	= "javielskerukm";
 if(isset($_GET['hashtag'])) {
@@ -92,8 +99,8 @@ if( property_exists($response->body->meta, 'error_message') ) {
 	echo '<br>Instagram-error: '.$response->body->meta->error_type;
 	echo '<br>Message: '.$response->body->meta->error_message;
 	if($response->body->meta->error_type == 'OAuthAccessTokenException') {
-		### CURL FOR NEW ACCESSTOKEN
-		echo '<br>Curl for new accesstoken (not implemented)';
+		
+		echo '<br>Varsle i kontrollpanelet (ikke implementert)';
 	}
 	die();
 }
