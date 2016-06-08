@@ -87,9 +87,9 @@ if ( isset( $_GET['deepdive'] ) && isset( $_GET['max_tag_id'] ) ) {
 
 $response = Request::get($uri)->send();
 #var_dump($response);
-if( in_array('error_message', $response->meta) ) {
-	echo '<br>Instagram-error: '.$response->meta->error_type;
-	echo '<br>Message: '.$response->meta->error_message;
+if( in_array('error_message', $response->body->meta) ) {
+	echo '<br>Instagram-error: '.$response->body->meta->error_type;
+	echo '<br>Message: '.$response->body->meta->error_message;
 	die();
 }
 
