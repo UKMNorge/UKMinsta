@@ -69,15 +69,16 @@ $table = 'ukm_insta_bilder';
 #       - "Det er postet 5 nye #javielskerukm-bilder denne uken."
 #		- Bruk insta.ukm.no som galleri for bilder tagget med UKM-hashtagger?
 
-# JIMs ID - skaff egen og få appen godkjent etterhvert
 $CLIENT_ID = INSTAGRAM_CLIENT_ID;
+
+$INSTAGRAM_ACCESS_TOKEN = '';
 
 #$tag    =  $_GET['hashtag'];
 $search_tag 	= "javielskerukm";
 if(isset($_GET['hashtag'])) {
 	$search_tag = $_GET['hashtag'];
 }
-$uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?client_id=".$CLIENT_ID;
+$uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?access_token=".$INSTAGRAM_ACCESS_TOKEN;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
 if ( isset( $_GET['deepdive'] ) && isset( $_GET['max_tag_id'] ) ) {
@@ -90,6 +91,10 @@ $response = Request::get($uri)->send();
 if( property_exists($response->body->meta, 'error_message') ) {
 	echo '<br>Instagram-error: '.$response->body->meta->error_type;
 	echo '<br>Message: '.$response->body->meta->error_message;
+	if($response->body->meta->error_type == 'OAuthAccessTokenException') {
+		### CURL FOR NEW ACCESSTOKEN
+		echo '<br>Curl for new accesstoken (not implemented)';
+	}
 	die();
 }
 
