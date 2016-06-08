@@ -74,6 +74,9 @@ $CLIENT_ID = INSTAGRAM_CLIENT_ID;
 
 #$tag    =  $_GET['hashtag'];
 $search_tag 	= "javielskerukm";
+if(isset($_GET['hashtag'])) {
+	$search_tag = $_GET['hashtag'];
+}
 $uri    = "https://api.instagram.com/v1/tags/" . $search_tag . "/media/recent?client_id=".$CLIENT_ID;
 
 # DETTE FORTELLER HVOR MANGE BILDER VI SKAL FÅ
