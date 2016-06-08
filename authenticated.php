@@ -28,7 +28,7 @@ $curl->post(array(
 $result = $curl->process($authorization_endpoint);
 
 var_dump($result);
-if(property_exists($result, 'error_message') {
+if(property_exists($result, 'error_message') ) {
 
 	die();
 }
