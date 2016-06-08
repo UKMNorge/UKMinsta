@@ -11,6 +11,7 @@ require_once('UKM/sql.class.php');
 use Httpful\Request;
 
 $INSTAGRAM_CLIENT_ID = INSTAGRAM_CLIENT_ID;
+$INSTAGRAM_CLIENT_SECRET = INSTAGRAM_CLIENT_SECRET;
 $redirect_uri = INSTAGRAM_AUTHORIZATION_REDIRECT_URI;
 $authorization_endpoint = 'https://api.instagram.com/oauth/access_token';
 
