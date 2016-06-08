@@ -28,7 +28,7 @@ $curl->post(array(
 $result = $curl->process($authorization_endpoint);
 
 $qry = new SQLins('ukm_insta_config', array('option_name' => 'access_token') );
-$qry->add($result->access_token);
+$qry->add('option_name', $result->access_token);
 $res = $qry->run();
 
 if ($res === false) {
