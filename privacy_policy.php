@@ -2,7 +2,7 @@
 
 ?>
 <h>English</h>
-<b>Privacy policy - UKMs use of Instagram data</b>
+<h2>Privacy policy - UKMs use of Instagram data</h2>
 <p>
 UKM uses the Instagram API only to collect pictures posted with UKM-related hashtags (#javielskerukm etc). 
 </p>
@@ -16,7 +16,7 @@ We will never save your login information, share it with others nor like/comment
 If you’ve posted a picture with a hashtag we’re using and don’t want it to be printed or viewed in our systems, just pop us an email at support@ukm.no.
 </p>
 <h>Norsk</h>
-<b>UKMs bruk av Instagram-data</b>
+<h2>UKMs bruk av Instagram-data</h2>
 <p>
 UKM bruker Instagram sitt API kun for å samle bilder tagget med UKM-relaterte hashtagger (som #javielskerukm etc).
 </p>
