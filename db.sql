@@ -1,0 +1,21 @@
+CREATE TABLE `ukm_insta_bilder` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `insta_id` varchar(50) NOT NULL DEFAULT '',
+  `user_id` int(11) NOT NULL,
+  `insta_url` varchar(250) DEFAULT '',
+  `url` varchar(250) DEFAULT NULL,
+  `url_thumb` varchar(250) DEFAULT NULL,
+  `url_lowres` varchar(250) DEFAULT NULL,
+  `caption` varchar(250) DEFAULT NULL,
+  `search_tag` varchar(100) DEFAULT NULL,
+  `created_time` int(11) DEFAULT NULL,
+  `upload_status` varchar(100) DEFAULT NULL,
+  `dropbox_job_id` varchar(100) DEFAULT NULL,
+  `dropbox_path` varchar(255) DEFAULT NULL,
+  `dropbox_upload_status` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `insta_id` (`insta_id`),
+  KEY `user_id` (`user_id`),
+  KEY `created_time` (`created_time`),
+  KEY `upload_status` (`upload_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=640701 DEFAULT CHARSET=utf8;
